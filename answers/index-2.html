@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+  </head>  
+  <body>
+    <h1>Update Documents</h1>
+    
+    <img src="https://blog.codinghorror.com/content/images/uploads/2012/04/6a0120a85dcdae970b016765373659970b-800wi.jpg">
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    
+    <script>
+    
+      /* globals firebase */
+
+      var config = {
+          apiKey: "AIzaSyB-MOVIoNyW2U873H6MliNyqNdzGkDP600",
+          authDomain: "hoist-av.firebaseapp.com",
+          databaseURL: "https://hoist-av.firebaseio.com",
+          projectId: "hoist-av",
+          storageBucket: "hoist-av.appspot.com",
+          messagingSenderId: "616588929847"
+        };
+
+      firebase.initializeApp(config);
+
+      // Initialize Cloud Firestore through Firebase
+      var db = firebase.firestore();
+
+      // Disable deprecated features
+      db.settings({
+        timestampsInSnapshots: true
+      });
+
+      // get all data in the "test" collection
+      db.collection("test").get().then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+          
+            // 1. update each document giving them a new key / value pair
+            
+            db.collection("test").doc(doc.id)
+              .update({
+                cupcake: true
+              })
+              .then(function() {
+                  console.log("Document successfully updated!");
+              })
+              .catch(function(error) {
+                  // The document probably doesn't exist.
+                  console.error("Error updating document: ", error);
+              });
+            
+              
+              
+          });
+      });
+    
+    </script>
+    
+  </body>
+</html>

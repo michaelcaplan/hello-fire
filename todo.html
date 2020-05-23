@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Vue.js • TodoMVC</title>
+    <link rel="stylesheet" href="https://unpkg.com/todomvc-app-css@2.0.6/index.css">
+		<style> [v-cloak] { display: none; } </style>
+	</head>
+	<body>
+    
+    <!-- our app starts here -->
+    <section id="app">
+      
+      <!-- The header -->
+      <header class="header">
+        <h1>todos</h1>
+
+        <input class="new-todo"
+               autofocus 
+               autocomplete="off"
+               placeholder="What needs to be done?"
+               v-model="newTodo"
+               v-on:keyup.enter="addTodo">
+      </header>
+      
+      <section class="main" 
+               v-show="todos.length" 
+               v-cloak>
+        
+        <ul class="todo-list">
+          
+          <!-- The list of todo items -->
+          <li v-for="todo in todos" 
+              class="todo"
+              v-bind:key="todo.id" 
+              v-bind:class="{ completed: todo.completed, editing: todo == editedTodo }">
+            
+            <div class="view">
+              
+              <input class="toggle"
+                     type="checkbox"
+                     v-model="todo.completed"
+                     v-on:click="completed(todo)">
+              
+              <label v-on:dblclick="editTodo(todo)">
+                {{ todo.title }}
+              </label>
+              
+              <button class="destroy" v-on:click="removeTodo(todo)"></button>
+              
+            </div>
+            
+            <input class="edit" 
+                   type="text"
+                   v-model="todo.title"
+                   v-on:blur="doneEdit(todo)"
+                   v-on:keyup.enter="doneEdit(todo)"
+                   v-on:keyup.esc="cancelEdit(todo)">
+            
+          </li>
+        </ul>
+        
+      </section>
+      
+      <footer class="footer" 
+              v-show="todos.length" 
+              v-cloak>
+        
+        <span class="todo-count">
+          <strong>
+            {{ remaining }}
+          </strong> 
+          {{ remaining | pluralize }} left
+        </span>
+
+        <button class="clear-completed" 
+                v-on:click="removeCompleted" 
+                v-show="todos.length > remaining">
+          Clear completed
+        </button>
+      </footer>
+      
+    </section>
+    
+    <footer class="info">
+      <p>Double-click to edit a todo</p>
+      <p>Based off of <a href="http://evanyou.me">Evan You</a>'s todo example</p>
+    </footer>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <script src="https://unpkg.com/vuefire@next"></script>
+		<script src="todo.js"></script>
+    
+	</body>
+</html>
