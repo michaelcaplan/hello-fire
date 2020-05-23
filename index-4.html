@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+  </head>  
+  <body>
+    <h1>Get Realtime Changes</h1>
+    
+    <img src="https://blog.codinghorror.com/content/images/uploads/2012/04/6a0120a85dcdae970b016765373659970b-800wi.jpg">
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    
+    <script>
+    
+      /* globals firebase */
+
+      var config = {
+          apiKey: "AIzaSyB-MOVIoNyW2U873H6MliNyqNdzGkDP600",
+          authDomain: "hoist-av.firebaseapp.com",
+          databaseURL: "https://hoist-av.firebaseio.com",
+          projectId: "hoist-av",
+          storageBucket: "hoist-av.appspot.com",
+          messagingSenderId: "616588929847"
+        };
+
+      firebase.initializeApp(config);
+
+      // Initialize Cloud Firestore through Firebase
+      var db = firebase.firestore();
+
+      // Disable deprecated features
+      db.settings({
+        timestampsInSnapshots: true
+      });
+
+      // our utility function to add a person
+      function addPerson(first, last, born) {
+        return db.collection("test").add({
+            first: first,
+            last: last,
+            born: born
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+      }
+      
+      // 1. when ever your app gets new data, write it to the console
+      
+    
+    </script>
+    
+  </body>
+</html>
